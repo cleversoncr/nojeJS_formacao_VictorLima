@@ -6,15 +6,6 @@ console.log(calculadora.mult(3, 20));
 console.log(calculadora.sub(60, 20));
 console.log(calculadora.div(300, 20));
 
-
-
-
-
-
-
-
-
-
 /*let mostrarSite = true;
 const site = 'www.giadoprogramador.com'
 
