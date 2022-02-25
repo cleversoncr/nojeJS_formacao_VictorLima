@@ -10,14 +10,19 @@ app.get('/', function (req, res) {
 app.get('/blog/:artigo?', function (req, res) { //Parâmetro opcional => /:<param>
   let artigo = req.params.artigo;
   if (artigo) {
-res.send(`<h2>Artigo: ${artigo}</h2>`)
+    res.send(`<h2>Artigo: ${artigo}</h2>`)
   } else {
     res.send('Bem vindo ao meu blog!');
   }
 })
 
 app.get('/canal/youtube', function (req, res) {
-  res.send('Bem vindo ao meu canal!');
+  let canal = req.query['canal'];
+  if (canal) {
+    res.send(canal);
+  } else {
+    res.send('Nenhum canal fornecido');
+  }
 })
 
 app.get('/ola/:nome/:empresa', function (req, res) {
