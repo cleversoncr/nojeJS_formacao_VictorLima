@@ -11,7 +11,7 @@
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.3",
-    "mssql": "^8.0.2",
-    "sequelize": "^6.17.0"
+    "msnodesqlv8": "^2.4.6",
+    "mssql": "^8.0.2"
   }
 }

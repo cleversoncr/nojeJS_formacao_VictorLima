@@ -1,6 +1,28 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const sql = require('mssql/msnodesqlv8');
+
+//Database
+const conn = new sql.ConnectionPool({
+  database: 'guiaperguntas',
+  server: 'localhost',
+  driver: 'msnodesqlv8',
+  options: {
+    trustServerCertificate: true,
+    trustedConnection: true
+  }
+})
+
+conn.connect()
+  .then((result) => {
+    if (result.connecting) {
+      console.log('connecting')
+    }
+    if (result.connected) {
+      console.log('connected')
+    }
+  })
 
 //Estou dizendo para o Express usar o EJS como View engine
 app.set('view engine', 'ejs');
