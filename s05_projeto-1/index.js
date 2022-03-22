@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const connection = require('./database/database');
-const perguntaModel = require('./database/Pergunta');
+const Pergunta = require('./database/Pergunta');
 
 //Database
 connection
@@ -24,8 +24,13 @@ app.use(bodyParser.json());
 
 //Rotas
 app.get('/', (req, res) => {
-
-  res.render('index');
+  Pergunta.findAll({ raw: true, order: [['id', 'DESC']] }) //ASC = Crescente || DESC = Decrescente
+    .then(perguntas => {
+      console.log(perguntas);
+      res.render('index', {
+        perguntas: perguntas
+      });
+    });
 });
 
 app.get('/perguntar', (req, res) => {
@@ -35,7 +40,27 @@ app.get('/perguntar', (req, res) => {
 app.post('/salvarPergunta', (req, res) => {
   let titulo = req.body.titulo;
   let descricao = req.body.descricao;
-  res.send(`Formulário recebido! Titulo: ${titulo} Descrição: ${descricao}`);
+  Pergunta.create({
+    titulo: titulo,
+    descricao: descricao
+  }).then(() => {
+    res.redirect('/')
+  });
+});
+
+app.get('/pergunta/:id', (req, res) => {
+  let id = req.params.id;
+  Pergunta.findOne({
+    where: { id: id }
+  }).then(pergunta => {
+    if (pergunta != undefined) {
+      res.render('pergunta', {
+        pergunta: pergunta
+      });
+    } else {
+      res.redirect('/');
+    }
+  });
 });
 
 //Configuração a porta localhost
